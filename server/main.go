@@ -23,11 +23,26 @@ type OrderDetail struct {
 }
 
 type Order struct {
-	ID      string        `json:"id"`
-	Details []OrderDetail `json:"orderDetails"`
+	ID        string        `json:"id"`
+	AccountID string        `json:"accountID"`
+	Cost      int           `json:"cost"`
+	Details   []OrderDetail `json:"orderDetails"`
+}
+
+type Account struct {
+	ID        string `json:"id"`
+	Name      string `json:"name"`
+	Email     string `json:"email"`
+	Password  string `json:"password"`
+	Telephone string `json:"telephone"`
+	City      string `json:"city"`
+	Street    string `json:"street"`
+	House     string `json:"house"`
 }
 
 var orders []Order
+
+var accounts []Account
 
 var pizzas = []Pizza{
 	{
@@ -89,7 +104,7 @@ func getPizza(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
 	for _, item := range pizzas {
-		for item.ID == params["id"] {
+		if item.ID == params["id"] {
 			json.NewEncoder(w).Encode(item)
 			return
 		}
@@ -98,18 +113,22 @@ func getPizza(w http.ResponseWriter, r *http.Request) {
 
 func getOrders(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(orders)
-}
 
-func getOrder(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	params := mux.Vars(r)
+	var account Account
+	err := json.NewDecoder(r.Body).Decode(&account)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	var accountOrders []Order
 	for _, item := range orders {
-		for item.ID == params["id"] {
-			json.NewEncoder(w).Encode(item)
-			return
+		if item.AccountID == account.ID {
+			accountOrders = append(accountOrders, item)
 		}
 	}
+
+	json.NewEncoder(w).Encode(accountOrders)
 }
 
 func createOrder(w http.ResponseWriter, r *http.Request) {
@@ -128,6 +147,44 @@ func createOrder(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(newOrder)
 }
 
+func createAccount(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	var newAccount Account
+	err := json.NewDecoder(r.Body).Decode(&newAccount)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	newAccount.ID = strconv.Itoa(len(accounts) + 1)
+	accounts = append(accounts, newAccount)
+
+	json.NewEncoder(w).Encode(newAccount)
+}
+
+func Authenticate(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	var account Account
+	err := json.NewDecoder(r.Body).Decode(&account)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	for _, item := range accounts {
+		if item.Email == account.Email {
+			if item.Password == account.Password {
+				json.NewEncoder(w).Encode(item)
+				return
+			}
+		}
+	}
+
+	http.Error(w, err.Error(), http.StatusUnauthorized)
+}
+
 func main() {
 
 	router := mux.NewRouter()
@@ -135,9 +192,11 @@ func main() {
 	router.HandleFunc("/pizzas", getPizzas).Methods("GET")
 	router.HandleFunc("/pizzas/{id}", getPizza).Methods("GET")
 
-	router.HandleFunc("/orders", getOrders).Methods("GET")
-	router.HandleFunc("/order/{id}", getOrder).Methods("GET")
+	router.HandleFunc("/orders", getOrders).Methods("POST")
 	router.HandleFunc("/order", createOrder).Methods("POST")
+
+	router.HandleFunc("/account/create", createAccount).Methods("POST")
+	router.HandleFunc("/account/login", Authenticate).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(":5000", router))
 }
