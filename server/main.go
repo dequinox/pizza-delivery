@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -25,6 +26,8 @@ type Order struct {
 	ID      string        `json:"id"`
 	Details []OrderDetail `json:"orderDetails"`
 }
+
+var orders []Order
 
 var pizzas = []Pizza{
 	{
@@ -93,12 +96,48 @@ func getPizza(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func getOrders(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(orders)
+}
+
+func getOrder(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+	for _, item := range orders {
+		for item.ID == params["id"] {
+			json.NewEncoder(w).Encode(item)
+			return
+		}
+	}
+}
+
+func createOrder(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	var newOrder Order
+	err := json.NewDecoder(r.Body).Decode(&newOrder)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	newOrder.ID = strconv.Itoa(len(orders) + 1)
+	orders = append(orders, newOrder)
+
+	json.NewEncoder(w).Encode(newOrder)
+}
+
 func main() {
 
 	router := mux.NewRouter()
 
 	router.HandleFunc("/pizzas", getPizzas).Methods("GET")
 	router.HandleFunc("/pizzas/{id}", getPizza).Methods("GET")
+
+	router.HandleFunc("/orders", getOrders).Methods("GET")
+	router.HandleFunc("/order/{id}", getOrder).Methods("GET")
+	router.HandleFunc("/order", createOrder).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(":5000", router))
 }
