@@ -13,6 +13,17 @@ type Pizza struct {
 	Title       string `json:"title"`
 	Description string `json:"description"`
 	ImageUrl    string `json:"imageUrl"`
+	Cost        int    `json:"cost"`
+}
+
+type OrderDetail struct {
+	PizzaID string `json:"pizzaID"`
+	Amount  int    `json:"amount"`
+}
+
+type Order struct {
+	ID      string        `json:"id"`
+	Details []OrderDetail `json:"orderDetails"`
 }
 
 var pizzas = []Pizza{
