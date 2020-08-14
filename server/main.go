@@ -36,9 +36,7 @@ type Account struct {
 	Email     string `json:"email"`
 	Password  string `json:"password"`
 	Telephone string `json:"telephone"`
-	City      string `json:"city"`
-	Street    string `json:"street"`
-	House     string `json:"house"`
+	Address   string `json:"address"`
 }
 
 var orders []Order
