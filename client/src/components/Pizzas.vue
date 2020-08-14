@@ -1,33 +1,37 @@
 <template>
-    <b-card-group deck class="card-group">
-        <div v-for="pizza in pizzas" :key="pizza.id">
-            <b-card
-                v-bind:title="pizza.title"
-                v-bind:img-src="pizza.imageUrl"
-                img-alt="Image"
-                img-top
-                class="text-left"
-                style="max-width: 15rem;"
-            >
-                <b-card-text class="text-left">
-                    {{pizza.description}}
-                </b-card-text>
+    <div>
+        <b-card-group deck class="card-group">
+            <div v-for="pizza in pizzas" :key="pizza.id">
+                <b-card
+                    v-bind:title="pizza.title"
+                    v-bind:img-src="pizza.imageUrl"
+                    img-alt="Image"
+                    img-top
+                    class="text-left"
+                    style="max-width: 15rem;"
+                >
+                    <b-card-text class="text-left">
+                        {{pizza.description}}
+                    </b-card-text>
 
-                <template v-slot:footer>
-                    <b-button href="#" variant="primary">Order</b-button>
-                </template>
-            </b-card>
-        </div>
-    </b-card-group>
-    
+                    <template v-slot:footer>
+                        <b-button href="#" variant="primary" @click="addPizza(pizza)">Add</b-button>
+                    </template>
+                </b-card>
+            </div>
+        </b-card-group>
+        <order-details class="order-detail" />
+    </div> 
 </template>
 
 <script>
 import {mapState} from 'vuex'
 import PizzasService from '@/services/PizzasService'
+import OrderDetails from './OrderDetails'
 
 export default {
   components: {
+      OrderDetails
   },
   computed: {
     ...mapState([
@@ -41,7 +45,12 @@ export default {
   },
   async mounted () {
     this.pizzas = (await PizzasService.index()).data
-  }
+  },
+  methods: {
+      addPizza(pizza) {
+        this.$store.dispatch('addPizza', pizza) 
+      },
+    }
 }
 </script>
 
@@ -55,5 +64,12 @@ export default {
     margin-bottom: 10px; /* Added */
     margin-top: 10px;
     width: 70%;
+}
+
+.order-detail {
+    width: 20%;
+    position: fixed;
+    top: 70px;
+    right: 30px;
 }
 </style>

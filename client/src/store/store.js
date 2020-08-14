@@ -9,17 +9,30 @@ export default new Vuex.Store({
   ],
   state: {
     user: null,
-    isUserLoggedIn: false
+    isUserLoggedIn: false,
+    orders: []
   },
   mutations: {
     setUser (state, user) {
       state.user = user
       state.isUserLoggedIn = !!(user)
+    },
+    addPizza (state, pizza){
+        state.orders.push(pizza)
+    },
+    removePizza(state, pizzaId){
+        state.orders.splice(pizzaId, 1)
     }
   },
   actions: {
     setUser ({commit}, user) {
       commit('setUser', user)
+    },
+    addPizza({commit}, pizza){
+        commit('addPizza', pizza)
+    },
+    removePizza({commit}, pizzaId){
+        commit('removePizza', pizzaId)
     }
   }
 })
