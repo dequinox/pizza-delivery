@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 type Pizza struct {
@@ -198,5 +199,12 @@ func main() {
 	router.HandleFunc("/account/create", createAccount).Methods("POST")
 	router.HandleFunc("/account/login", Authenticate).Methods("POST")
 
-	log.Fatal(http.ListenAndServe(":5000", router))
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:8080"},
+		AllowCredentials: true,
+	})
+
+	handler := c.Handler(router)
+
+	log.Fatal(http.ListenAndServe(":5000", handler))
 }
