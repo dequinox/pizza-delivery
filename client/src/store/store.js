@@ -23,6 +23,9 @@ export default new Vuex.Store({
     },
     removePizza(state, pizzaId){
         state.orders.splice(pizzaId, 1)
+    },
+    clearOrder(state){
+        state.orders = []
     }
   },
   actions: {
@@ -34,6 +37,10 @@ export default new Vuex.Store({
     },
     removePizza({commit}, pizzaId){
         commit('removePizza', pizzaId)
+    },
+    clearOrder({commit})
+    {
+        commit('clearOrder')
     }
   }
 })

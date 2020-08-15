@@ -117,10 +117,12 @@ export default {
                     account: this.user
                 })
                 this.ordered = true
+                this.$store.dispatch('clearOrder')
             } catch (error) {
             }
         }
         else {
+            this.$store.dispatch('clearOrder')
             console.log("No User")
             this.ordered = true
         }    
