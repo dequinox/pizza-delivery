@@ -1,7 +1,14 @@
 <template>
 <div>
     <div v-if="$store.state.isUserLoggedIn">
-        <b-table striped hover :items="history"></b-table>
+        <b-card
+        header="History of Orders"
+        style="max-width: 50rem;"
+        >
+            <b-card-body>
+                <b-table striped hover :items="history"></b-table>
+            </b-card-body>
+        </b-card>
     </div>
 
     <div v-if="!$store.state.isUserLoggedIn">
