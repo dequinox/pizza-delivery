@@ -94,7 +94,7 @@ import AuthenticationService from '@/services/AuthenticationService'
                 name: 'pizzas'
             })
         } catch (error) {
-            this.error = error.response.data.error
+          console.log("cannot register")
         }
       },
     }

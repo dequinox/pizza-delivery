@@ -1,5 +1,6 @@
 <template>
   <div>
+      <div v-if="!this.ordered">
     <b-card v-if="!$store.state.isUserLoggedIn && $store.state.orders.length > 0" header="Information Details" style="max-width: 20rem;"
     class="mb-2 d-flex justify-content-center">
         <b-form>
@@ -64,11 +65,27 @@
             </b-card-body>
         </b-card>
     </div>
+    </div>
+    <div v-if="this.ordered">
+        <b-card
+        header="Order"
+        style="max-width: 20rem;"
+        >
+            <b-card-body>
+                <b-card-title>Order Sucessful</b-card-title>       
+                <b-card-text v-if="$store.state.isUserLoggedIn" class="text-success">
+                    Head to History to see your orders
+                </b-card-text>
+            </b-card-body>
+        </b-card>
+    </div>
   </div>
 </template>
 
 <script>
 import OrderDetails from './OrderDetails'
+import {mapState} from 'vuex'
+import OrdersService from '@/services/OrdersService'
 
 export default {
     components: {
@@ -81,14 +98,32 @@ export default {
           name: '',
           telephone: '',
           address: ''
-        }
+        },
+        ordered: false
       }
+    },
+    computed: {
+        ...mapState([
+            'isUserLoggedIn',
+            'user'
+        ])
     },
     methods: {
       async orderPizzas() {
-        this.$router.push({
-            name: 'pizzas'
-        })
+        if (this.isUserLoggedIn){
+            console.log("TRying order with a user")
+            try {
+                const response = await OrdersService.createOrder({
+                    account: this.user
+                })
+                this.ordered = true
+            } catch (error) {
+            }
+        }
+        else {
+            console.log("No User")
+            this.ordered = true
+        }    
       },
     }
 }
