@@ -5,7 +5,11 @@
             style="max-width: 20rem;"
             header="Orders"
             header-tag="header"
+            class="text-left"
         >
+            <template v-slot:header>
+                <h6 class="mb-0">Orders ${{$store.state.cost}}</h6>
+            </template>
             <b-list-group flush>
                 <div v-for="(item, index) in orders" :key="index">
                     <b-list-group-item>

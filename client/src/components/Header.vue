@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="info">
+    <b-navbar toggleable="lg" class="header">
       <b-navbar-brand 
         :to="{
         name: 'pizzas'
@@ -46,7 +46,6 @@
             <template v-slot:button-content>
               <em>User</em>
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
             <b-dropdown-item href="#" @click="logout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -69,4 +68,7 @@ export default {
 </script>
 
 <style scoped>
+.header {
+  border-bottom: 1px solid #2e2e2e;
+}
 </style>

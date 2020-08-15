@@ -10,7 +10,8 @@ export default new Vuex.Store({
   state: {
     user: null,
     isUserLoggedIn: false,
-    orders: []
+    orders: [],
+    cost: 0,
   },
   mutations: {
     setUser (state, user) {
@@ -19,13 +20,19 @@ export default new Vuex.Store({
       state.orders = []
     },
     addPizza (state, pizza){
+        state.cost = state.cost + pizza.cost
         state.orders.push(pizza)
     },
     removePizza(state, pizzaId){
+        state.cost = state.cost - state.orders[pizzaId].cost
         state.orders.splice(pizzaId, 1)
     },
     setOrder(state, orders){
         state.orders = orders
+        state.cost = 0
+        state.orders.forEach(element => {
+            state.cost = state.cost + element.cost
+        });
     }
   },
   actions: {

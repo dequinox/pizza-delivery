@@ -15,7 +15,7 @@
                     </b-card-text>
 
                     <template v-slot:footer>
-                        <b-button href="#" variant="primary" @click="addPizza(pizza)">Add</b-button>
+                        <b-button href="#" variant="primary" @click="addPizza(pizza)">Add ${{pizza.cost}}</b-button>
                     </template>
                 </b-card>
             </div>
@@ -48,6 +48,7 @@ export default {
   },
   methods: {
       addPizza(pizza) {
+        console.log(pizza)
         this.$store.dispatch('addPizza', pizza) 
       },
     }

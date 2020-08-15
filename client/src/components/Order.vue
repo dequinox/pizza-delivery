@@ -106,7 +106,8 @@ export default {
         ...mapState([
             'isUserLoggedIn',
             'user',
-            'orders'
+            'orders',
+            'cost',
         ])
     },
     methods: {
@@ -125,7 +126,7 @@ export default {
 
                 const response = await OrdersService.createOrder({
                     accountID: this.user.id,
-                    cost: 0,
+                    cost: this.cost,
                     orderDetails: orderDetail
                 })
                 this.ordered = true
