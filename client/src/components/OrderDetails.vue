@@ -8,7 +8,7 @@
             class="text-left"
         >
             <template v-slot:header>
-                <h6 class="mb-0">Orders ${{$store.state.cost}}</h6>
+                <h6 class="mb-0">Orders ${{$store.state.cost}} + $10 Delivery</h6>
             </template>
             <b-list-group flush>
                 <div v-for="(item, index) in orders" :key="index">

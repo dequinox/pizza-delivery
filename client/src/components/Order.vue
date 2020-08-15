@@ -132,7 +132,7 @@ export default {
 
                 const response = await OrdersService.createOrder({
                     accountID: this.user.id,
-                    cost: this.cost,
+                    cost: this.cost + 10,
                     orderDetails: orderDetail
                 })
                 this.ordered = true
