@@ -30,16 +30,18 @@
             v-if="!$store.state.isUserLoggedIn" 
             :to="{
             name: 'login'
-            }">
-            Login
+            }" 
+            variant="light">
+            LOGIN
           </b-button>
 
           <b-button 
             v-if="!$store.state.isUserLoggedIn"
             :to="{
             name: 'register'
-            }">
-            Sign up
+            }"
+            variant="light">
+            SIGN UP
           </b-button>
           <b-nav-item-dropdown right v-if="$store.state.isUserLoggedIn">
             <!-- Using 'button-content' slot -->
@@ -69,6 +71,6 @@ export default {
 
 <style scoped>
 .header {
-  border-bottom: 1px solid #2e2e2e;
+  border-bottom: 1px solid #8e8e8e;
 }
 </style>
