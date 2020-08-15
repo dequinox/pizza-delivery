@@ -58,7 +58,6 @@
 
         <b-button type="submit" variant="primary">Submit</b-button>
         </b-form>
-      <pre class="m-0">{{ form }}</pre>
     </b-card>
   </div>
 </template>

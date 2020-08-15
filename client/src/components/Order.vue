@@ -47,11 +47,17 @@
         </b-form-group>
 
         </b-form>
-      <pre class="m-0">{{ form }}</pre>
     </b-card>
     <order-details class="order-detail" />
     <div v-if="$store.state.orders.length > 0">
-        <b-button type="submit" variant="primary" @click=orderPizzas()>Order Pizzas</b-button>
+        <b-card
+        header="Order Confirmation"
+        style="max-width: 20rem;"
+        >
+            <b-card-body>
+                <b-button type="submit" variant="primary" @click=orderPizzas()>Order Pizzas</b-button>
+            </b-card-body>
+        </b-card>
     </div>
 
     <div v-if="$store.state.orders.length == 0">
