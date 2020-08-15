@@ -4,6 +4,7 @@ import Register from '@/components/Register'
 import Login from '@/components/Login'
 import Pizzas from '@/components/Pizzas'
 import Order from '@/components/Order'
+import History from '@/components/History'
 Vue.use(Router)
 
 export default new Router({
@@ -27,6 +28,11 @@ export default new Router({
       path: '/pizzas',
       name: 'pizzas',
       component: Pizzas
+    },
+    {
+      path: '/history',
+      name: 'history',
+      component: History
     },
     {
       path: '*',

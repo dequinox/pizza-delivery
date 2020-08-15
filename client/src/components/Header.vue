@@ -1,11 +1,24 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="#">Pizza Delivery</b-navbar-brand>
+      <b-navbar-brand 
+        :to="{
+        name: 'pizzas'
+        }">
+          Pizza Delivery
+      </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
+          <b-navbar-nav v-if="$store.state.isUserLoggedIn">
+            <b-nav-item 
+            :to="{
+            name: 'history'
+            }">
+              History
+            </b-nav-item>
+          </b-navbar-nav>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form>

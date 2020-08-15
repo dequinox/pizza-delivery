@@ -21,6 +21,7 @@ type Pizza struct {
 type OrderDetail struct {
 	PizzaID string `json:"pizzaID"`
 	Amount  int    `json:"amount"`
+	Title   string `json:"title"`
 }
 
 type Order struct {

@@ -105,24 +105,41 @@ export default {
     computed: {
         ...mapState([
             'isUserLoggedIn',
-            'user'
+            'user',
+            'orders'
         ])
     },
     methods: {
       async orderPizzas() {
         if (this.isUserLoggedIn){
             console.log("TRying order with a user")
+            var orderDetail = []
+            this.orders.forEach(function (arrayItem){
+                orderDetail.push({
+                    pizzaID: arrayItem.id,
+                    amount: 1,
+                    title: arrayItem.title
+                })
+            });
             try {
+
                 const response = await OrdersService.createOrder({
-                    account: this.user
+                    accountID: this.user.id,
+                    cost: 0,
+                    orderDetails: orderDetail
                 })
                 this.ordered = true
-                this.$store.dispatch('clearOrder')
+                this.$store.dispatch('setOrder', [])
             } catch (error) {
+                console.log({
+                    accountID: this.user,
+                    cost: 0,
+                    orderDetails: this.orders
+                })
             }
         }
         else {
-            this.$store.dispatch('clearOrder')
+            this.$store.dispatch('setOrder', [])
             console.log("No User")
             this.ordered = true
         }    
