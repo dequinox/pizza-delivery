@@ -4,6 +4,7 @@
     <b-card header="Login" style="max-width: 20rem;"
     class="mb-2 d-flex justify-content-center">
         <b-form @submit="onSubmit">
+          <p v-if="!authenticationResult" class="text-danger">Wrong Password or Email</p>
         <b-form-group
             id="input-group-1"
             label="Email address:"
@@ -45,7 +46,8 @@ import AuthenticationService from '@/services/AuthenticationService'
         form: {
           email: '',
           password: '',
-        }
+        },
+        authenticationResult : true
       }
     },
     methods: {
@@ -60,7 +62,7 @@ import AuthenticationService from '@/services/AuthenticationService'
                 name: 'pizzas'
             })
         } catch (error) {
-            this.error = error.response.data.error
+            this.authenticationResult = false
         }
       },
     }

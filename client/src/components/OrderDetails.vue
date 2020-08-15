@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="orders.length > 0">
         <b-card
             no-body
             style="max-width: 20rem;"
@@ -34,6 +34,11 @@ export default {
   methods: {
       remove(id) {
         this.$store.dispatch('removePizza', id) 
+      },
+      order() {
+        this.$router.push({
+            name: 'order'
+        })
       }
   }
 }
