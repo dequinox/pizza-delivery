@@ -53,7 +53,9 @@ export default {
             this.history.push({
                 ID: element.id,
                 Cost: element.cost,
+                Currency: element.currency,
                 OrderDetails: titles
+
             })
         });
     },

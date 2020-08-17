@@ -8,7 +8,7 @@
             class="text-left"
         >
             <template v-slot:header>
-                <h6 class="mb-0">Orders {{ currency }}{{ getCost2Fixed($store.state.costInCurrency) }} + {{ currency }}{{ getCost2Fixed($store.state.costInCurrency * 0.05) }} Delivery</h6>
+                <h6 class="mb-0">Orders {{ currency }}{{ getCostRound($store.state.costInCurrency) }} + {{ currency }}10 Delivery</h6>
                 <label for="currency">Currency:</label>
                     <select v-model="currency">
                     <option>$</option>
@@ -74,8 +74,8 @@ export default {
       increaseAmount(id) {
           this.$store.dispatch('increaseAmountPizza', id)
       },
-      getCost2Fixed(val) {
-          return val.toFixed(2)
+      getCostRound(val) {
+          return Math.round(val)
       }
   }
 }
