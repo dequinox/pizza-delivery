@@ -162,7 +162,7 @@ export default {
 .order-detail {
     width: 20%;
     position: fixed;
-    top: 70px;
+    top: 80px;
     right: 30px;
 }
 .card {

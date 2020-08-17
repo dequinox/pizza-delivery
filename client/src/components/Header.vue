@@ -79,7 +79,7 @@ export default {
 
 <style scoped>
 .header {
-  border-bottom: 1px solid #8e8e8e;
+  border-bottom: 1px solid rgba(127, 127, 127, 50);
 }
 
 .icon {
