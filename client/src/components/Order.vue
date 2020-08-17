@@ -3,7 +3,7 @@
       <div v-if="!this.ordered">
     <b-card v-if="!$store.state.isUserLoggedIn && $store.state.orders.length > 0" header="Information Details" style="max-width: 20rem;"
     class="mb-2 d-flex justify-content-center">
-        <b-form>
+        <b-form @submit="orderPizzas">
         <b-form-group
             id="input-group-1"
             label="Email address:"
@@ -45,7 +45,7 @@
             placeholder="Enter Address"
             ></b-form-input>
         </b-form-group>
-        <b-button type="submit" variant="primary" @click=orderPizzas()>Order Pizas</b-button>
+        <b-button type="submit" variant="primary">Order Pizas</b-button>
         </b-form>
     </b-card>
     <order-details class="order-detail" />
