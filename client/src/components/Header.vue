@@ -25,7 +25,10 @@
             <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
             <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
           </b-nav-form>-->
-
+          <span class="fa-layers fa-fw fa-2x icon">
+            <i class="fas fa-shopping-cart "></i>
+            <span class="fa-layers-counter" style="background:Tomato">{{$store.state.orders.length}}</span>
+          </span>
           <b-button 
             v-if="!$store.state.isUserLoggedIn" 
             :to="{
@@ -72,5 +75,9 @@ export default {
 <style scoped>
 .header {
   border-bottom: 1px solid #8e8e8e;
+}
+
+.icon {
+  padding-left: 10px;
 }
 </style>

@@ -207,7 +207,7 @@ func main() {
 	router.HandleFunc("/account/login", Authenticate).Methods("POST")
 
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:8080"},
+		AllowedOrigins:   []string{"*"},
 		AllowCredentials: true,
 	})
 
