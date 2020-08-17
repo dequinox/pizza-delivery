@@ -124,7 +124,7 @@ export default {
             this.orders.forEach(function (arrayItem){
                 orderDetail.push({
                     pizzaID: arrayItem.id,
-                    amount: 1,
+                    amount: arrayItem.amount,
                     title: arrayItem.title
                 })
             });

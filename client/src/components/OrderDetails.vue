@@ -13,6 +13,15 @@
             <b-list-group flush>
                 <div v-for="(item, index) in orders" :key="index">
                     <b-list-group-item>
+                        <div>
+                            <button class="btn" @click="reduceAmount(index)">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                            {{item.amount}}
+                            <button class="btn" @click="increaseAmount(index)">
+                                <i class="fas fa-arrow-right" @click="increaseAmount(index)"></i>
+                            </button>
+                        </div>
                         <div class="item-title text-left">{{item.title}}</div>
                         <div class="close-button"><button class="btn" @click="remove(index)">✖</button></div>
                     </b-list-group-item>
@@ -21,7 +30,6 @@
             <template v-slot:footer>
                 <b-button href="#" variant="primary" @click="order()">Order</b-button>
             </template>
-
         </b-card>
     </div>
 </template>
@@ -43,7 +51,13 @@ export default {
         this.$router.push({
             name: 'order'
         })
-      }
+      },
+      reduceAmount(id) {
+          this.$store.dispatch('reduceAmountPizza', id)
+      },
+      increaseAmount(id) {
+          this.$store.dispatch('increaseAmountPizza', id)
+      },
   }
 }
 </script>

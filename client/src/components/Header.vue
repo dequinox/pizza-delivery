@@ -31,7 +31,7 @@
           }">
             <span class="fa-layers fa-fw fa-2x">
               <i class="fas fa-shopping-cart "></i>
-              <span class="fa-layers-counter fa-1x" style="background:Tomato">{{$store.state.orders.length}}</span>
+              <span v-if="$store.state.orders.length > 0" class="fa-layers-counter fa-1x" style="background:Tomato">{{$store.state.orders.length}}</span>
             </span>
           </b-nav-item>
           <b-button 
