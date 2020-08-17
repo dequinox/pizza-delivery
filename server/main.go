@@ -28,6 +28,7 @@ type Order struct {
 	ID        string        `json:"id"`
 	AccountID string        `json:"accountID"`
 	Cost      int           `json:"cost"`
+	Currency  string        `json:"currency"`
 	Details   []OrderDetail `json:"orderDetails"`
 }
 

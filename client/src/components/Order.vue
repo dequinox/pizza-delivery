@@ -114,6 +114,7 @@ export default {
             'user',
             'orders',
             'cost',
+            'currency'
         ])
     },
     methods: {
@@ -133,6 +134,7 @@ export default {
                 const response = await OrdersService.createOrder({
                     accountID: this.user.id,
                     cost: this.cost + 10,
+                    currency: this.currency,
                     orderDetails: orderDetail
                 })
                 this.ordered = true

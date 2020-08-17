@@ -12,6 +12,8 @@ export default new Vuex.Store({
     isUserLoggedIn: false,
     orders: [],
     cost: 0,
+    costInCurrency: 0,
+    currency: "$"
   },
   mutations: {
     setUser (state, user) {
@@ -21,6 +23,7 @@ export default new Vuex.Store({
     },
     addPizza (state, pizza){
         state.cost = state.cost + pizza.cost
+        state.costInCurrency = state.cost
         var exists = false
         var index = 0
         var i, len
@@ -31,6 +34,7 @@ export default new Vuex.Store({
             break;
           }
         }
+        console.log(state.cost)
         console.log(pizza)
         console.log(index, exists)
         if (exists) {
@@ -47,6 +51,7 @@ export default new Vuex.Store({
     },
     removePizza(state, pizzaId){
         state.cost = state.cost - state.orders[pizzaId].cost * state.orders[pizzaId].amount
+        state.costInCurrency = state.cost
         state.orders.splice(pizzaId, 1)
     },
     setOrder(state, orders){
@@ -55,15 +60,28 @@ export default new Vuex.Store({
         state.orders.forEach(element => {
             state.cost = state.cost + element.cost * element.amount
         });
+        state.costInCurrency = state.cost
     },
     increaseAmountPizza(state, pizzaId){
       state.orders[pizzaId].amount = state.orders[pizzaId].amount + 1
       state.cost = state.cost + state.orders[pizzaId].cost
+      state.costInCurrency = state.cost
     },
     reduceAmountPizza(state, pizzaId){
       if (state.orders[pizzaId].amount > 1){
         state.orders[pizzaId].amount = state.orders[pizzaId].amount - 1
         state.cost = state.cost - state.orders[pizzaId].cost
+        state.costInCurrency = state.cost
+      }
+    },
+    changeCurrency(state, currencySign) {
+      if (state.currency != currencySign){
+        if (currencySign == '$'){
+          state.costInCurrency = state.cost
+        } else {
+          state.costInCurrency = state.cost * 1.19;
+        }
+        state.currency = currencySign
       }
     }
   },
@@ -87,5 +105,8 @@ export default new Vuex.Store({
     increaseAmountPizza({commit}, pizzaId){
       commit('increaseAmountPizza', pizzaId)
     },
+    changeCurrency({commit}, currency) {
+      commit('changeCurrency', currency)
+    }
   }
 })

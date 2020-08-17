@@ -8,7 +8,12 @@
             class="text-left"
         >
             <template v-slot:header>
-                <h6 class="mb-0">Orders ${{$store.state.cost}} + $10 Delivery</h6>
+                <h6 class="mb-0">Orders {{ currency }}{{ getCost2Fixed($store.state.costInCurrency) }} + {{ currency }}{{ getCost2Fixed($store.state.costInCurrency * 0.05) }} Delivery</h6>
+                <label for="currency">Currency:</label>
+                    <select v-model="currency">
+                    <option>$</option>
+                    <option>€</option>
+                </select>
             </template>
             <b-list-group flush>
                 <div v-for="(item, index) in orders" :key="index">
@@ -38,6 +43,17 @@
 import {mapState} from 'vuex'
 
 export default {
+  data () {
+    return {
+      currency: '$'
+    }
+  },
+  watch: {
+      currency: function(val) {
+          this.$store.dispatch('changeCurrency', val)
+          console.log(val)
+      }
+  },
   computed: {
     ...mapState([
       'orders'
@@ -58,6 +74,9 @@ export default {
       increaseAmount(id) {
           this.$store.dispatch('increaseAmountPizza', id)
       },
+      getCost2Fixed(val) {
+          return val.toFixed(2)
+      }
   }
 }
 </script>
