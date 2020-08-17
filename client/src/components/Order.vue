@@ -45,11 +45,11 @@
             placeholder="Enter Address"
             ></b-form-input>
         </b-form-group>
-
+        <b-button type="submit" variant="primary" @click=orderPizzas()>Order Pizas</b-button>
         </b-form>
     </b-card>
     <order-details class="order-detail" />
-    <div v-if="$store.state.orders.length > 0">
+    <div v-if="$store.state.orders.length > 0 && $store.state.isUserLoggedIn">
         <b-card
         header="Order Confirmation"
         style="max-width: 20rem;"
@@ -62,7 +62,7 @@
 
     <div v-if="$store.state.orders.length == 0">
         <b-card
-        header="Error"
+        header="Cart"
         style="max-width: 20rem;"
         >
             <b-card-body>

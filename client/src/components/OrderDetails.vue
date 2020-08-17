@@ -32,9 +32,10 @@
                     </b-list-group-item>
                 </div>
             </b-list-group>
-            <template v-slot:footer>
+            <!--<template v-slot:footer >
                 <b-button href="#" variant="primary" @click="order()">Order</b-button>
             </template>
+            -->
         </b-card>
     </div>
 </template>

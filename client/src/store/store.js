@@ -20,6 +20,9 @@ export default new Vuex.Store({
       state.user = user
       state.isUserLoggedIn = !!(user)
       state.orders = []
+      state.currency = '$'
+      state.cost = 0
+      state.costInCurrency = 0
     },
     addPizza (state, pizza){
         state.cost = state.cost + pizza.cost
