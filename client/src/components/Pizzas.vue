@@ -20,7 +20,6 @@
                 </b-card>
             </div>
         </b-card-group>
-        <order-details class="order-detail" />
     </div> 
 </template>
 
